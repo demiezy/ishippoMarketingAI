@@ -1,0 +1,55 @@
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth ">
+            <div class="row w-100">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left p-5">
+                        <h4 class="font-weight-light">Resend Activation Link</h4>
+                        <form ng-submit="resend.checkCredential(loginData);">
+                            <div class="body bg-gray">
+                                <div class="form-group">
+                                    <input ng-disabled="resend.disabled" ng-model="resend.loginData.username" type="text" name="username" class="form-control" placeholder="Username"/>
+                                    <i class="mdi mdi-account"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input ng-disabled="resend.disabled" ng-model="resend.loginData.password" type="password" name="password" class="form-control" placeholder="Password"/>
+                                    <i class="mdi mdi-eye"></i>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button ng-disabled="resend.disabled" type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium">Resend</button>
+
+                                <div class="mt-2 text-center">
+                                    <p><a href="/resetpassword" class="auth-link text-aqua">I forgot my password?</a></p>
+
+                                    <a href="/register" class="auth-link text-aqua">Register a new membership</a>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="margin text-center">
+                            <div class="btn btn-outline-success" ng-show="resend.successMsg">
+                                <i class="fa fa-check"></i>
+                                {{ resend.successMsg }}
+                            </div>
+                            <div class="btn btn-outline-success" ng-show="resend.errorMsg">
+                                <i class="fa fa-ban"></i>
+                                {{ resend.errorMsg }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<section class="content">
+    <div class="row">
+        <div class="form-box" id="login-box">
+            <div class="header">Resend Activation Link</div>
+
+        </div>        
+    </div>
+</section><!-- /.content -->

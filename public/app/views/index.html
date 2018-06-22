@@ -1,0 +1,172 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>iShippoAI</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+      <link rel="stylesheet" href="assets/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+      <script src="assets/js/angular.js"></script>
+      <script src="assets/js/angular-route.js"></script>
+      <script src="assets/js/angular-animate.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/emailCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/twitterCtrl.js"></script>
+
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+    <script src="app/services/twitterServices.js"></script>
+
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+      <link rel="shortcut icon" href="images/favicon.png" />
+    </head>
+    <body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center" style="background:#039BE5">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo"/></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo"/></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex" ng-show="main.isLoggedIn"  >
+                    <!--<li class="nav-item" >-->
+                        <!--<a href="#" class="nav-link" ><i class="mdi mdi-image-filter"></i>menu1</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item active">-->
+                        <!--<a href="#" class="nav-link"><i class="mdi mdi-email-outline"></i>menu2</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a href="#" class="nav-link"><i class="mdi mdi-calendar"></i>menu3</a>-->
+                    <!--</li>-->
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item"><a ng-show="!main.isLoggedIn" href="/login" class="nav-link logout">Login</a></li>
+                    <li class="nav-item"><a ng-show="!main.isLoggedIn" href="/register" class="nav-link logout">Register</a></li>
+                    <li class="nav-item dropdown" ng-show="main.isLoggedIn">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="mdi mdi-account"></i>{{main.username}}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <a href="/profile" class="dropdown-item preview-item ">Profile</a>
+                            <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="dropdown-item preview-item">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+                <button  ng-show="main.isLoggedIn" class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar"  ng-show="main.isLoggedIn">
+                <ul class="nav  text-small">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            <div class="profile-image"> <img src="assets/images/faces/face9.jpg" alt="image"/> <span class="online-status online"></span> </div>
+                            <div class="profile-name">
+                                <p class="name">Hello {{main.username}}</p>
+                                <!--<p class="designation">Manager</p>-->
+                                <!--<div class="badge badge-teal mx-auto mt-3">Online</div>-->
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/about"><i class="mdi mdi-developer-board icon-sm menu-icon"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"> <a class="nav-link" ng-show="main.isLoggedIn && main.authorized" href="/management"><i class="mdi mdi-account icon-sm menu-icon"></i> <span>User Management</span></a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages"><i class="mdi mdi-twitter icon-sm menu-icon"></i>   <span class="menu-title">Twitter</span><i class="menu-arrow"></i></a>
+                        <div class="collapse" id="general-pages">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="/twittertimeline">Timeline</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/tweetcrawler">Crawler</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/tweetstable">Tweets Collection</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#facebook" aria-expanded="false" aria-controls="general-pages"><i class="mdi mdi-facebook icon-sm menu-icon"></i>  <span class="menu-title">Facebook</span><i class="menu-arrow"></i></a>
+                        <div class="collapse" id="facebook">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="#">Timeline</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="#">Crawler</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel" style="width: 100% !important;">
+                <div class="content-wrapper" ng-view >
+
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <!--<span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018 <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>-->
+                        <!--<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>-->
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- partial -->
+        </div>
+        <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+
+            <!--Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ main.modalHeader }}</h5>
+                    <button type="button" ng-click="main.endSession();" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              <!--<div class="modal-header">-->
+                <!--<button type="button" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>-->
+                <!--<h4 class="modal-title">{{ main.modalHeader }}</h4>-->
+              <!--</div>-->
+              <div class="modal-body">
+                <p>{{ main.modalBody }}</p>
+                <div ng-show="main.hideButton" class="loader">Loading...</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <!-- plugins:js -->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <!--<script src="assets/js/popper.min.js"></script>-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- endinject -->
+    <!--<script src="assets/js/Chart.min.js"></script>-->
+
+    <!-- inject:js -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/misc.js"></script>
+    <!-- endinject -->
+
+    <!-- Custom js for this page-->
+    <script src="assets/js/dashboard.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+        <script src="//cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+    <link rel="stylesheet" href="../../assets/js/jquery-jvectormap-2.0.3.css" type="text/css" media="screen"/>
+    <script src="../../assets/js/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="../../assets/js/jquery-jvectormap-world-mill-en.js"></script>
+    </body>
+</html>

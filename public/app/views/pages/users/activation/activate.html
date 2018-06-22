@@ -1,0 +1,24 @@
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+				<div class="box-header">
+                    <h3 class="box-title">Account Activation</h3>                                    
+                </div><!-- /.box-header -->
+
+                <div class="form-box" id="login-box">
+					<div class="margin text-center">
+					  <div class="alert alert-success alert-dismissable" ng-show="email.successMsg">
+					      <i class="fa fa-check"></i>
+					      {{ email.successMsg }}
+					  </div>
+					  <div class="alert alert-danger alert-dismissable" ng-show="email.errorMsg">
+					    <i class="fa fa-ban"></i>
+					    {{ email.errorMsg }}
+					  </div>
+					</div>
+				</div>
+			</div><!-- /.box -->
+		</div>
+	</div>
+</section><!-- /.content -->

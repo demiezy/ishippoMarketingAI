@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-statistics">
+            <div class="card-body">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">User Management</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="person in management.users">
+                                <td>{{ person.name }}</td>
+                                <td>{{ person.username }}</td>
+                                <td>{{ person.email }}</td>
+                                <td>
+                                    <a href="/edit/{{ person._id }}">
+                                        <button type="button" class="btn btn-primary">Edit</button>
+                                    </a>
+
+                                    <button ng-click="management.deleteUser(person.username);" type="button" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+
+                    <div class="row show-hide-message" ng-show="management.successMsg">
+                        <div class="alert alert-success">{{ management.successMsg }}</div>
+                    </div>
+                    <div class="row show-hide-message" ng-show="management.errorMsg">
+                        <div class="alert alert-danger">{{ management.errorMsg }}</div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

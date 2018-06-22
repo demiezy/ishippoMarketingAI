@@ -1,0 +1,120 @@
+<div>
+	<div class="col-12 grid-margin">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Tweets Collection Table</h4>
+				<div class="box">
+					<div class="box-body table-responsive">
+						<table class="table table-hover ">
+							<thead>
+								<tr>
+									<th>Screen Name</th>
+									<th>Username</th>
+									<th>Tweet Text</th>
+									<th>Tweet ID</th>
+									<th>Location</th>
+									<th>Action</th>
+									<!-- <th>Like</th>
+									<th>Retweet</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="tweet in tweets.tweetsData | pagination: (currentPage - 1)
+				                  * pageSize | limitTo: pageSize">
+									<td>{{ tweet.screenname }}</td>
+									<td>{{ tweet.username }}</td>
+									<td>{{ tweet.tweettext }}</td>
+									<td>{{ tweet.tweetid }}</td>
+									<td>{{ tweet.location }}</td>
+
+									<!-- <td>
+										<button ng-click="tweets.getName(tweet)" type="button" class="btn btn-primary">Tweet</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-warning" ng-click="tweets.likeTweet(tweet.tweetid)">Like</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-success" ng-click="tweets.reTweet(tweet.tweetid);">Retweet</button>
+									</td> -->
+
+									<td width="150px">
+										<a href="#" ng-model="collapsed" ng-click="collapsed=!collapsed" class="btn btn-light btn-fw">
+											<span   ng-class="{'mdi mdi-minus': collapsed, 'mdi mdi-plus': !collapsed }"></span>
+										</a>
+										<div ng-show="collapsed">
+											<button ng-click="tweets.getName(tweet)" type="button" class="btn-primary btn-sm btn btn-fw" style="margin-bottom: 2px;"><i class="mdi mdi-twitter"></i>Tweet</button><br>
+
+											<button type="button" class="btn-success btn-sm btn btn-fw" ng-click="tweets.likeTweet(tweet.tweetid)" style="margin-bottom: 2px;"><i class="mdi mdi-thumb-up"></i>Like</button><br>
+
+											<button type="button" class="btn-dark  btn-sm btn btn-fw" ng-click="tweets.reTweet(tweet.tweetid);" style="margin-bottom: 2px;"><i class="mdi mdi-replay"></i>Retweet</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!-- /.box-body -->
+					<ul uib-pagination total-items="tweets.tweetsData.length" items-per-page="pageSize" ng-model="currentPage" class="pagination-sm" boundary-link-numbers="true" max-size="maxSize"></ul>
+				</div><!-- /.box -->
+
+				<div class="margin text-center">
+					<div class="alert alert-success alert-dismissable" ng-show="tweets.successMssg">
+						<i class="fa fa-check"></i>
+						{{ tweets.successMssg }}
+					</div>
+					<div class="alert alert-danger alert-dismissable" ng-show="tweets.errorMssg">
+						<i class="fa fa-ban"></i>
+						{{ tweets.errorMssg }}
+					</div>
+				</div>
+
+				<!-- Modal to send Tweet -->
+				<div class="modal fade" id="tweetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">New message</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form name="myForm" ng-submit="tweets.tweetSend(screenName, tweets.tweet, myForm.$valid)" novalidate>
+
+									<div class="form-group">
+										<label for="recipient-name" class="form-control-label">Recipient:</label>
+										<input type="text" class="form-control" id="recipient-name" ng-model="screenName" disabled>
+									</div>
+
+									<div class="form-group" ng-class="{ 'has-success': (myForm.tweetText.$valid && !myForm.tweetText.$pristine), 'has-error': (!myForm.tweetText.$valid && !myForm.tweetText.$pristine) || (!myForm.tweetText.$valid && myForm.$submitted) }">
+
+										<label for="message-text" class="form-control-label">Message:</label>
+										<textarea class="form-control" name="tweetText" id="message-text" ng-model="tweets.tweet.tweetText" ng-pattern="/^(.{1,10})$/" required></textarea>
+
+										<p class="help-block" ng-show="(!myForm.tweetText.$pristine && myForm.tweetText.$error.required) || (myForm.$submitted && myForm.tweetText.$error.required)">Message is Required</p>
+
+										<p class="help-block" ng-show="!myForm.tweetText.$pristine && myForm.tweetText.$error.pattern">Text Limit is 140 characters</p>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Send message</button>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="margin text-center">
+							<div class="alert alert-success alert-dismissable" ng-show="tweets.successMsg">
+								<i class="fa fa-check"></i>
+								{{ tweets.successMsg }}
+							</div>
+							<div class="alert alert-danger alert-dismissable" ng-show="tweets.errorMsg">
+								<i class="fa fa-ban"></i>
+								{{ tweets.errorMsg }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

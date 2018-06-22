@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+        <div class="card card-statistics">
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-left">
+                        <i class="mdi mdi-twitter text-twitter icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                        <p class="card-text text-right">Tweets</p>
+                        <div class="fluid-container">
+                            <h3 class="card-title font-weight-bold text-right mb-0">{{ twitter.tweets }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted mt-3">
+                    <i class="mdi mdi-information mr-1" aria-hidden="true"></i> More info
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+        <div class="card card-statistics">
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-left">
+                        <i class="mdi mdi-account-multiple text-warning icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                        <p class="card-text text-right">Following</p>
+                        <div class="fluid-container">
+                            <h3 class="card-title font-weight-bold text-right mb-0">{{ twitter.following }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted mt-3">
+                    <i class="mdi mdi-information mr-1" aria-hidden="true"></i> More info
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+        <div class="card card-statistics">
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-left">
+                        <i class="mdi mdi-account-multiple-plus text-teal icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                        <p class="card-text text-right">Followers</p>
+                        <div class="fluid-container">
+                            <h3 class="card-title font-weight-bold text-right mb-0">{{ twitter.followers }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted mt-3">
+                    <i class="mdi mdi-information mr-1" aria-hidden="true"></i> More info
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+        <div class="card card-statistics">
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-left">
+                        <i class="mdi mdi-thumb-up text-info icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                        <p class="card-text text-right">Likes</p>
+                        <div class="fluid-container">
+                            <h3 class="card-title font-weight-bold text-right mb-0">{{ twitter.likes }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted mt-3">
+                    <i class="mdi mdi-information mr-1" aria-hidden="true"></i> More info
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Tweets Chart</h4>
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="tweetslabels">
+                </canvas>
+                <p class="txt-muted mt-3">Crawled Tweets Count: {{ totalcount }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Daily number of Tweets</h4>
+                <canvas id="bar" class="chart chart-bar" chart-data="value" chart-labels="labels"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Tweets Output</h4>
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="mdata" chart-labels="labels">
+                </canvas>
+                <p class="txt-muted mt-3">Total model output Count: {{ modelcount }}</p>
+            </div>
+        </div>
+    </div> -->
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Daily Number of Model Tweets</h4>
+                <!--<canvas id="bar" class="chart chart-bar" chart-data="value" chart-labels="labels"></canvas>-->
+                <canvas id="bar" class="chart chart-bar" chart-data="mvalue" chart-labels="mlabels"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
