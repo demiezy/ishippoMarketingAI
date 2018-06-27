@@ -231,51 +231,107 @@ angular.module('twitterController', ['twitterServices', 'chart.js'])
 			Tweet.getTweets().then(function (data) {
 				if (data.data.success) {
 					data = data.data.tweets;
-					$scope.plot = [];
-					console.log(data);
+					var latlong = [];
+					console.log(latlong);
 					for(var i = 0; i < data.length; i++) {
-						$scope.plot.push(
+						latlong.push(
 								data[i]._id= {
-									"latLng" : [data[i].latitude,data[i].longitude],
-									"name" : data[i].screenname,
+									"lat" : data[i].latitude,
+									"lng" : data[i].longitude,
 								}
 						);
 					}
+//----------------------------------------------------
 
-					$(function(){
-						$('#world-map-markers').vectorMap({
-							map: 'world_mill_en',
-							normalizeFunction: 'polynomial',
-							hoverOpacity     : 0.7,
-							hoverColor       : false,
-							backgroundColor  : 'transparent',
-							regionStyle      : {
-								initial      : {
-									fill            : 'rgba(210, 214, 222, 1)',
-									'fill-opacity'  : 1,
-									stroke          : 'none',
-									'stroke-width'  : 0,
-									'stroke-opacity': 1
-								},
-								hover        : {
-									'fill-opacity': 0.7,
-									cursor        : 'pointer'
-								},
-								selected     : {
-									fill: 'yellow'
-								},
-								selectedHover: {}
-							},
-							markerStyle      : {
-								initial: {
-									fill  : '#F8E23B',
-									stroke: '#383f47'
-								}
-							},
-							markers: $scope.plot
+					//var min = 1;
+					//var max = 3910;
+					//var data = addressPoints.map(function (p) {
+					//	// normalize intensity values to between 0 and 1
+					//	var intensity = parseInt(p[2]) || 0;
+					//	var normalized = (intensity - min) / (max - min);
+					//	return { lat: p[0], lng: p[1]};
+					//});
+					var data = latlong;
+					console.log("DATA", data);
 
-						});
+					var testData = {
+						data: data
+					};
+
+					var cfg = {
+						// radius should be small ONLY if scaleRadius is true (or small radius is intended)
+						// if scaleRadius is false it will be the constant radius used in pixels
+						"radius": 15,
+						"maxOpacity": .5,
+						// scales the radius based on map zoom
+						"scaleRadius": false,
+						// if set to false the heatmap uses the global maximum for colorization
+						// if activated: uses the data maximum within the current map boundaries
+						//   (there will always be a red spot with useLocalExtremas true)
+						"useLocalExtrema": true,
+						// which field name in your data represents the latitude - default "lat"
+						latField: 'lat',
+						// which field name in your data represents the longitude - default "lng"
+						lngField: 'lng',
+						// which field name in your data represents the data value - default "value"
+						valueField: 'count',
+						blur: 0.95,
+						gradient: {
+							'.5': 'yellow',
+							'.8': 'orange',
+							'.95': 'red'
+						}
+					};
+
+					var map = L.map('map',{
+						zoomAnimation: false
 					});
+					L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+							{maxZoom: 19}).addTo(map);
+
+					var heatmapLayer = new HeatmapOverlay(cfg).addTo(map);
+					map.fitWorld().zoomIn();
+
+					map.on('resize', function(e) {
+						map.fitWorld({reset: true}).zoomIn();
+					});
+					heatmapLayer.setData(testData);
+
+//----------------------------------------------------
+					//$(function(){
+					//	$('#world-map-markers').vectorMap({
+					//		map: 'world_mill_en',
+					//		normalizeFunction: 'polynomial',
+					//		hoverOpacity     : 0.7,
+					//		hoverColor       : false,
+					//		backgroundColor  : 'transparent',
+					//		regionStyle      : {
+					//			initial      : {
+					//				fill            : 'rgba(210, 214, 222, 1)',
+					//				'fill-opacity'  : 1,
+					//				stroke          : 'none',
+					//				'stroke-width'  : 0,
+					//				'stroke-opacity': 1
+					//			},
+					//			hover        : {
+					//				'fill-opacity': 0.7,
+					//				cursor        : 'pointer'
+					//			},
+					//			selected     : {
+					//				fill: 'yellow'
+					//			},
+					//			selectedHover: {}
+					//		},
+					//		markerStyle      : {
+					//			initial: {
+					//				fill  : '#F8E23B',
+					//				stroke: '#383f47'
+					//			}
+					//		},
+					//		markers: $scope.plot
+                    //
+					//	});
+					//});
 				} else {
 					data.errorMsg = 'No Tweets Found';
 				}
